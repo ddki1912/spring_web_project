@@ -1,0 +1,255 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin section</title>
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
+<link rel="stylesheet" href="./asset/css/base.css">
+<link rel="stylesheet" href="./asset/css/admin.css">
+<link rel="stylesheet" href="./asset/js/admin.js">
+<link rel="stylesheet"
+	href="./asset/font/themify-icons-font/themify-icons/themify-icons.css">
+</head>
+
+<body>
+	Content
+	<div id="main">
+		<div id="header">
+			<div class="nav-bar">
+				Logo
+				<div class="nav-bar__logo">eLibrary</div>
+
+				Search
+				<form id="search" action="SearchLibrarian">
+					<input class="search__inp" type="search"
+						placeholder="Search librarian" name="searchLibra">
+					<button class="search-btn">
+						<i class="search__icon ti-search"></i>
+					</button>
+				</form>
+
+				Logout
+				<form action="Logout" class="logout">
+					<button class="logout-btn" name="logout">Logout</button>
+				</form>
+
+			</div>
+		</div>
+
+		<div id="body">
+			<div id="content">
+				Add librarian
+				<div id="add">
+					<button class="add-btn btn add-js">+ Add librarian</button>
+				</div>
+
+				Show list of librarian
+				<div id="table">
+					<table class="libra-list">
+						<tr class="libra-list__item">
+							<th class="libra-list__title" colspan="7">Librarians'
+								Information</th>
+						</tr>
+						<tr class="libra-list__item">
+							<th class="libra-list__heading">No</th>
+							<th class="libra-list__heading">ID</th>
+							<th class="libra-list__heading">Full name</th>
+							<th class="libra-list__heading">Date of birth</th>
+							<th class="libra-list__heading">Phone</th>
+							<th class="libra-list__heading">Email</th>
+						</tr>
+
+						<tr class="libra-list__item">
+							<td class="libra-list__value">1</td>
+							<td class="libra-list__value">LB001</td>
+							<td class="libra-list__value">Do Duy Kien</td>
+							<td class="libra-list__value">19/12/2002</td>
+							<td class="libra-list__value">0963448172</td>
+							<td class="libra-list__value">ddkien1912@gmail.com</td>
+							<td class="libra-item__function"><i
+								class="edit-btn fa-solid fa-pen edit-js"></i> <i
+								class="delete-btn fa-solid fa-trash delete-js"></i></td>
+						</tr>
+
+						<tr class="libra-list__item">
+							<td class="libra-list__value">2</td>
+							<td class="libra-list__value">LB002</td>
+							<td class="libra-list__value">Do Duy Kien</td>
+							<td class="libra-list__value">19/12/2002</td>
+							<td class="libra-list__value">0963448172</td>
+							<td class="libra-list__value">ddkien1912@gmail.com</td>
+							<td class="libra-item__function"><i
+								class="edit-btn fa-solid fa-pen edit-js"></i> <i
+								class="delete-btn fa-solid fa-trash delete-js"></i></td>
+						</tr>
+
+
+					</table>
+
+				</div>
+			</div>
+
+		</div>
+
+	</div>
+
+	Add modal
+	<div id="add-modal">
+		<form class="body-content" action="AddLibrarian" method="get">
+			Close btn
+			<div class="modal-close modal-close-js">
+				<i class="ti-close"></i>
+			</div>
+
+			Add-title
+			<div class="add-title">ADD LIBRARIAN</div>
+
+			Form to fill in
+			<ul class="info__list">
+				<li class="info__item">
+					<div class="info__item--title">
+						Name <span class="info__item--vip">*</span>
+					</div>
+					<div class="info__item--inp">
+						<input class="info--inp" required type="text"
+							placeholder="Eg. Nguyen Van A" name="libraName">
+					</div>
+				</li>
+
+				<li class="info__item">
+					<div class="info__item--title">
+						Date of birth <span class="info__item--vip">*</span>
+					</div>
+					<div class="info__item--inp">
+						<input class="info--inp" type="date" required
+							placeholder="Eg. 01/01/2002" name="libraDob">
+					</div>
+				</li>
+
+				<li class="info__item">
+					<div class="info__item--title">
+						Phone <span class="info__item--vip">*</span>
+					</div>
+					<div class="info__item--inp">
+						<input class="info--inp" required type="tel"
+							placeholder="Eg. 0918581223" name="libraPhone" pattern="(0)\d{9}">
+					</div>
+				</li>
+
+				<li class="info__item">
+					<div class="info__item--title">Email</div>
+					<div class="info__item--inp">
+						<input class="info--inp" type="email"
+							placeholder="Eg. abc123@gmail.com" name="libraEmail">
+					</div>
+				</li>
+
+			</ul>
+
+			<Button class="add-modal-btn btn" name="libraAddBtn" value="add">ADD</Button>
+		</form>
+	</div>
+
+	Edit modal
+	<div id="edit-modal">
+		<form class="body-content" action="EditLibrarian" method="get">
+			Close btn
+			<div class="modal-close modal-close-js">
+				<i class="ti-close"></i>
+			</div>
+
+			Add-title
+			<div class="edit-title">EDIT LIBRARIAN</div>
+
+			Form to fill in
+			<ul class="info__list">
+				<li class="info__item" style="display: none;">
+					<div class="info__item--title">
+						ID <span class="info__item--vip">*</span>
+					</div>
+					<div class="info__item--inp">
+						<input class="info--inp info-input-js" required type="text"
+							placeholder="Eg. 100001" name="libraID">
+					</div>
+				</li>
+
+				<li class="info__item">
+					<div class="info__item--title">
+						Name <span class="info__item--vip">*</span>
+					</div>
+					<div class="info__item--inp">
+						<input class="info--inp info-input-js" required type="text"
+							placeholder="Eg. Nguyen Van A" name="libraName">
+					</div>
+				</li>
+
+				<li class="info__item">
+					<div class="info__item--title">
+						Date of birth <span class="info__item--vip">*</span>
+					</div>
+					<div class="info__item--inp">
+						<input class="info--inp info-input-js" required type="date"
+							placeholder="Eg. 01/01/2002" name="libraDob">
+					</div>
+				</li>
+
+				<li class="info__item">
+					<div class="info__item--title">
+						Phone <span class="info__item--vip">*</span>
+					</div>
+					<div class="info__item--inp">
+						<input class="info--inp info-input-js" required type="tel"
+							placeholder="Eg. 0918581223" pattern="(0)\d{9}" name="libraPhone">
+					</div>
+				</li>
+
+				<li class="info__item">
+					<div class="info__item--title">Email</div>
+					<div class="info__item--inp">
+						<input class="info--inp info-input-js" type="email"
+							placeholder="Eg. abc123@gmail.com" name="libraEmail">
+					</div>
+				</li>
+
+			</ul>
+
+			<Button class="edit-modal-btn btn" name="libraUpdateBtn"
+				value="update">UPDATE</Button>
+
+		</form>
+	</div>
+
+	Delete modal
+	<div id="delete-modal">
+		<form class="body-content" action="DeleteLibrarian" method="get">
+			Modal close
+			<div class="modal-close modal-close-js">
+				<i class="ti-close"></i>
+			</div>
+			<div class="delete__quest">Are you sure that you want to delete
+				this librarian?</div>
+			<div class="info__item" style="display: none;">
+				<div class="info__item--title">
+					ID <span class="info__item--vip">*</span>
+				</div>
+				<div class="info__item--inp">
+					<input class="info--inp info-input-js" required type="text"
+						placeholder="Eg. 100001" name="libraID">
+				</div>
+			</div>
+			<div class="delete__answer">
+				<button class="yes-btn btn" name="libraDeleteBtn" value="yes">YES</button>
+				<button class="no-btn btn" name="libraDeleteBtn" value="no">NO</button>
+			</div>
+		</form>
+	</div>
+
+</body>
+
+</html> -->

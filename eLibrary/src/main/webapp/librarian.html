@@ -1,0 +1,473 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Librarian section</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
+    <link rel="stylesheet" href="./asset/css/base.css">
+    <link rel="stylesheet" href="./asset/css/libra.css">
+    <link rel="stylesheet" href="./asset/font/themify-icons-font/themify-icons/themify-icons.css">
+</head>
+
+<body>
+    Content
+    <div id="main">
+        <div id="header">
+            <div class="nav-bar">
+                Logo
+                <div class="nav-bar__logo">
+                    eLibrary
+                </div>
+
+                Navigation
+                <ul class="nav-bar__list">
+                    Reader
+                    <li class="nav-bar__item reader-js active">
+                        READERS
+                    </li>
+
+                    Books
+                    <li class="nav-bar__item books-js">
+                        BOOKS
+                    </li>
+                </ul>
+
+                Logout
+                <form action="LibrarianLogout" class="logout">
+                    <button class="logout-btn" name="logout">Logout</button>
+                </form>
+            </div>
+        </div>
+
+        <div id="body">
+
+            Reader
+            <div class="reader-content reader-content-js active">
+                Search
+                <form action="SearchReader" class="search">
+                    <input class="search__inp" type="search" placeholder="Search reader" name="searchReader">
+                    <button class="search-btn">
+                        <i class="search__icon ti-search"></i>
+                    </button>
+                </form>
+
+                Add reader
+                <div class="add">
+                    <button class="add-btn btn reader-add-js">+ Add reader</button>
+                </div>
+
+                Show list of readers
+                <div class="table">
+                    <table class="reader-list">
+                        <tr class="reader-list__item">
+                            <th class="reader-list__title" colspan="8">Readers' Information</th>
+                        </tr>
+                        <tr class="reader-list__item">
+                            <th class="reader-list__heading">ID</th>
+                            <th class="reader-list__heading">Full name</th>
+                            <th class="reader-list__heading">Date of birth</th>
+                            <th class="reader-list__heading">Phone</th>
+                            <th class="reader-list__heading">Books ID</th>
+                            <th class="reader-list__heading">Borrow on</th>
+                            <th class="reader-list__heading">Return status</th>
+                        </tr>
+
+                        <tr class="reader-list__item">
+                            <td class="reader-list__value">RD001</td>
+                            <td class="reader-list__value">Do Duy Kien</td>
+                            <td class="reader-list__value">19/12/2002</td>
+                            <td class="reader-list__value">0963448172</td>
+                            <td class="reader-list__value">EB001</td>
+                            <td class="reader-list__value">15/12/2021</td>
+                            <td class="reader-list__value">Returned</td>
+                            <td class="reader-item__function">
+                                <i class="borrow-btn fa-solid fa-book borrow-js"></i>
+                                <i class="return-btn fa-solid fa-rotate-left return-js"></i>
+                                <i class="edit-btn fa-solid fa-pen reader-edit-js"></i>
+                                <i class="delete-btn fa-solid fa-trash reader-delete-js"></i>
+                            </td>
+                        </tr>
+
+                        <tr class="reader-list__item">
+                            <td class="reader-list__value">RD002</td>
+                            <td class="reader-list__value">Do Ha An</td>
+                            <td class="reader-list__value">19/12/2002</td>
+                            <td class="reader-list__value">0963448172</td>
+                            <td class="reader-list__value">EB001</td>
+                            <td class="reader-list__value">17/12/2021</td>
+                            <td class="reader-list__value">Returned</td>
+                            <td class="reader-item__function">
+                                <i class="borrow-btn fa-solid fa-book borrow-js"></i>
+                                <i class="return-btn fa-solid fa-rotate-left return-js"></i>
+                                <i class="edit-btn fa-solid fa-pen reader-edit-js"></i>
+                                <i class="delete-btn fa-solid fa-trash reader-delete-js"></i>
+                            </td>
+                        </tr>
+
+                        <tr class="reader-list__item">
+                            <td class="reader-list__value">RD001</td>
+                            <td class="reader-list__value">Do Duy Kien</td>
+                            <td class="reader-list__value">19/12/2002</td>
+                            <td class="reader-list__value">0963448172</td>
+                            <td class="reader-list__value">EB001</td>
+                            <td class="reader-list__value">15/12/2021</td>
+                            <td class="reader-list__value">Returned</td>
+                            <td class="reader-item__function">
+                                <i class="borrow-btn fa-solid fa-book borrow-js"></i>
+                                <i class="return-btn fa-solid fa-rotate-left return-js"></i>
+                                <i class="edit-btn fa-solid fa-pen reader-edit-js"></i>
+                                <i class="delete-btn fa-solid fa-trash reader-delete-js"></i>
+                            </td>
+                        </tr>
+
+                        <tr class="reader-list__item">
+                            <td class="reader-list__value">RD001</td>
+                            <td class="reader-list__value">Do Duy Kien</td>
+                            <td class="reader-list__value">19/12/2002</td>
+                            <td class="reader-list__value">0963448172</td>
+                            <td class="reader-list__value">EB001</td>
+                            <td class="reader-list__value">15/12/2021</td>
+                            <td class="reader-list__value">Returned</td>
+                            <td class="reader-item__function">
+                                <i class="borrow-btn fa-solid fa-book borrow-js"></i>
+                                <i class="return-btn fa-solid fa-rotate-left return-js"></i>
+                                <i class="edit-btn fa-solid fa-pen reader-edit-js"></i>
+                                <i class="delete-btn fa-solid fa-trash reader-delete-js"></i>
+                            </td>
+                        </tr>
+
+                    </table>
+                </div>
+            </div>
+
+            Books
+            <div class="books-content books-content-js">
+                Search
+                <form action="SearchBook" class="search">
+                    <input class="search__inp" type="search" placeholder="Search book" name="searchBook">
+                    <button class="search-btn">
+                        <i class="search__icon ti-search"></i>
+                    </button>
+                </form>
+
+                Add books
+                <div class="add">
+                    <button class="add-btn btn books-add-js">+ Add book</button>
+                </div>
+
+                Show list of books
+                <div class="table">
+                    <table class="books-list">
+                        <tr class="books-list__item">
+                            <th class="books-list__title" colspan="7">Books' Information</th>
+                        </tr>
+                        <tr class="books-list__item">
+                            <th class="books-list__heading">ID</th>
+                            <th class="books-list__heading">Name of book</th>
+                            <th class="books-list__heading">Author</th>
+                            <th class="books-list__heading">Quantity</th>
+                            <th class="books-list__heading">Borrowed</th>
+                            <th class="books-list__heading">Borrow by</th>
+                        </tr>
+
+                        <tr class="books-list__item">
+                            <td class="books-list__value">1</td>
+                            <td class="books-list__value">EB001</td>
+                            <td class="books-list__value">Harry Potter</td>
+                            <td class="books-list__value">J.K.Rowling</td>
+                            <td class="books-list__value">10</td>
+                            <td class="books-list__value">2</td>
+                            <td class="books-list__value">
+                                Do Duy Kien
+                                <br>
+                                Do Duy Kien
+                            </td>
+                            <td class="books-item__function">
+                                <i class="edit-btn fa-solid fa-pen books-edit-js"></i>
+                            </td>
+                        </tr>
+
+                        <tr class="books-list__item">
+                            <td class="books-list__value">2</td>
+                            <td class="books-list__value">EB002</td>
+                            <td class="books-list__value">Harry Potter</td>
+                            <td class="books-list__value">J.K.Rowling</td>
+                            <td class="books-list__value">10</td>
+                            <td class="books-list__value">2</td>
+                            <td class="books-list__value">
+                                Do Duy Kien
+                                <br>
+                                Do Duy Kien
+                            </td>
+                            <td class="books-item__function">
+                                <i class="edit-btn fa-solid fa-pen books-edit-js"></i>
+                            </td>
+                        </tr>
+
+                    </table>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+        READER
+
+    Add modal
+    <div class="add-modal reader-add-modal">
+        <form class="body-content" action="AddReader">
+            Close btn
+            <div class="modal-close modal-close-js">
+                <i class="ti-close"></i>
+            </div>
+
+            Add-title
+            <div class="add-title">ADD READER</div>
+
+            Form to fill in
+            <ul class="info__list">
+                <li class="info__item">
+                    <div class="info__item--title">
+                        Name
+                        <span class="info__item--vip">*</span>
+                    </div>
+                    <div class="info__item--inp">
+                        <input class="info--inp" required type="text" placeholder="Eg. Nguyen Van A" name="readerName">
+                        <span class="info--notice">Please enter your full name</span>
+                    </div>
+                </li>
+
+                <li class="info__item">
+                    <div class="info__item--title">
+                        Date of birth
+                        <span class="info__item--vip">*</span>
+                    </div>
+                    <div class="info__item--inp">
+                        <input class="info--inp" required type="date" placeholder="Eg. 01/01/2002" name="readerDob">
+                        <span class="info--notice">Please enter your date of birth</span>
+                    </div>
+                </li>
+
+                <li class="info__item">
+                    <div class="info__item--title">
+                        Phone
+                        <span class="info__item--vip">*</span>
+                    </div>
+                    <div class="info__item--inp">
+                        <input class="info--inp" required type="tel" placeholder="Eg. 0918581223" name="readerPhone">
+                        <span class="info--notice">Please enter your phone number</span>
+                    </div>
+                </li>
+            </ul>
+
+            <span class="add-notice">
+                The librarian has existed
+            </span>
+
+            <Button class="add-modal-btn btn" name="readerAddBtn">ADD</Button>
+
+        </form>
+    </div>
+
+    Edit modal
+    <div class="edit-modal reader-edit-modal">
+        <form class="body-content" action="EditReader">
+            Close btn
+            <div class="modal-close modal-close-js">
+                <i class="ti-close"></i>
+            </div>
+
+            Add-title
+            <div class="edit-title">EDIT READER</div>
+
+            Form to fill in
+            <ul class="info__list">
+                <li class="info__item">
+                    <div class="info__item--title">
+                        Name
+                        <span class="info__item--vip">*</span>
+                    </div>
+                    <div class="info__item--inp">
+                        <input class="info--inp" required type="text" placeholder="Eg. Nguyen Van A" value="Do Duy Kien"
+                            name="readerName">
+                        <span class="info--notice">Please enter your full name</span>
+                    </div>
+                </li>
+
+                <li class="info__item">
+                    <div class="info__item--title">
+                        Date of birth
+                        <span class="info__item--vip">*</span>
+                    </div>
+                    <div class="info__item--inp">
+                        <input class="info--inp" required type="text" placeholder="Eg. 01/01/2002" value="19/12/2002"
+                            name="readerDob">
+                        <span class="info--notice">Please enter your date of birth</span>
+                    </div>
+                </li>
+
+                <li class="info__item">
+                    <div class="info__item--title">
+                        Phone
+                        <span class="info__item--vip">*</span>
+                    </div>
+                    <div class="info__item--inp">
+                        <input class="info--inp" required type="tel" placeholder="Eg. 0918581223" value="0963448172"
+                            name="readerPhone">
+                        <span class="info--notice">Please enter your phone number</span>
+                    </div>
+                </li>
+            </ul>
+
+            <Button class="edit-modal-btn btn" name="readerEditBtn">UPDATE</Button>
+
+        </form>
+    </div>
+
+    Delete modal
+    <div class="delete-modal reader-delete-modal">
+        <form class="body-content" action="DeleteReader">
+            Modal close
+            <div class="modal-close modal-close-js">
+                <i class="ti-close"></i>
+            </div>
+            <div class="delete__quest">Are you sure that you want to delete this reader?</div>
+            <form action=""></form>
+            <div class="delete__answer">
+                <button class="yes-btn btn">YES</button>
+                <button class="no-btn btn">NO</button>
+            </div>
+        </form>
+    </div>
+
+    Borrow modal
+    <div class="borrow-modal">
+        <form class="body-content" action="BorrowBook">
+            Modal close
+            <div class="modal-close modal-close-js">
+                <i class="ti-close"></i>
+            </div>
+            Add-title
+            <div class="borrow-title">Borrow Book</div>
+
+            Form to fill in
+            <div class="borrow-info">
+                <span class="borrow-info__label">Books' ID: </span>
+                <input class="borrow-info__inp" required type="text" placeholder="Eg. EB001" name="bookId">
+            </div>
+
+            <Button class="borrow-modal-btn btn">BORROW</Button>
+        </form>
+    </div>
+
+    Return modal
+    <div class="return-modal">
+        <form class="body-content" action="ReturnBook">
+            Modal close
+            <div class="modal-close modal-close-js">
+                <i class="ti-close"></i>
+            </div>
+            Add-title
+            <div class="return-title">Return Book</div>
+
+            Form to fill in
+            <div class="return-info">
+                <span class="return-info__label">Books' ID: </span>
+                <input class="return-info__inp" required type="text" placeholder="Eg. EB001" name="bookId">
+            </div>
+
+            <Button class="return-modal-btn btn">RETURN</Button>
+        </form>
+    </div>
+
+        BOOKS
+        
+    Add modal
+    <div class="add-modal books-add-modal">
+        <form class="body-content" action="AddBook">
+            Close btn
+            <div class="modal-close modal-close-js">
+                <i class="ti-close"></i>
+            </div>
+
+            Add-title
+            <div class="add-title">ADD BOOKS</div>
+
+            Form to fill in
+            <ul class="info__list">
+                <li class="info__item">
+                    <div class="info__item--title">
+                        Name
+                        <span class="info__item--vip">*</span>
+                    </div>
+                    <div class="info__item--inp">
+                        <input class="info--inp" required type="text" placeholder="Eg. Harry Potter" name="bookName">
+                        <span class="info--notice">Please enter your phone number</span>
+                    </div>
+                </li>
+
+                <li class="info__item">
+                    <div class="info__item--title">Author</div>
+                    <div class="info__item--inp">
+                        <input class="info--inp" type="text" placeholder="Eg. J.K.Rowling" name="author">
+                    </div>
+                </li>
+
+                <li class="info__item">
+                    <div class="info__item--title">
+                        Quantity
+                        <span class="info__item--vip">*</span>
+                    </div>
+                    <div class="info__item--inp">
+                        <input class="info--inp" required type="number" placeholder="Eg. 10" name="quantity">
+                        <span class="info--notice">Please enter your phone number</span>
+                    </div>
+                </li>
+            </ul>
+
+            <Button class="add-modal-btn btn">ADD</Button>
+
+        </form>
+    </div>
+
+    Edit modal
+    <div class="edit-modal books-edit-modal">
+        <form class="body-content" action="EditBook">
+            Close btn
+            <div class="modal-close modal-close-js">
+                <i class="ti-close"></i>
+            </div>
+
+            Add-title
+            <div class="edit-title">EDIT NUMBERS OF BOOKS</div>
+
+            Form to fill in
+            <ul class="info__list">
+                <li class="info__item">
+
+                    <div class="info__item--title">
+                        Quantity
+                        <span class="info__item--vip">*</span>
+                    </div>
+
+                    <div class="info__item--inp">
+                        <input class="info--inp" required type="number" placeholder="Eg. 10" value="10" name="quantity">
+                    </div>
+                </li>
+            </ul>
+
+            <Button class="edit-modal-btn btn">UPDATE</Button>
+
+        </form>
+    </div>
+
+
+    <script src="./asset/js/libra.js">
+    </script>
+</body>
+
+</html> -->

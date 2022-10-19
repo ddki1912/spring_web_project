@@ -1,0 +1,28 @@
+<!-- Login Modal -->
+<div class="login-modal js-modal active">
+	<form class="login-modal__content js-modal-content" method="post"
+		action="LibrarianLogin">
+		<div class="login-modal__close js-modal-close">
+			<i class="modal-close ti-close "></i>
+		</div>
+		<div class="login-modal__header">
+			<span class="login-modal__header--logo">eLibrary</span> <span
+				class="login-modal__header--title js-modal-title">Librarian
+				Login</span>
+		</div>
+		<div class="login-modal__body">
+			<label class="login-modal__acc--title" for="account">Account</label>
+			<input class="login-modal__acc--inp" required type="text"
+				placeholder="Your ID" name="user"> <label
+				class="login-modal__password--title" for="password">Password</label>
+			<input class="login-modal__password--inp" required type="password"
+				placeholder="Your Password" name="password">
+		</div>
+
+		<span class="login-error">Your ID or your password was
+			incorrect!</span>
+
+		<button class="login-btn btn" name="loginBtn" value="login">Login</button>
+
+	</form>
+</div>

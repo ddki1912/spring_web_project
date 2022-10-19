@@ -1,0 +1,54 @@
+:root {
+    --text-color: #c9c9c9;
+    --white-color: #fff;
+    --black-color: #000;
+    --bg-color: #ccc;
+    --btn-color: #347ab6;
+    --btn-hover-color: #345bb7;
+}
+
+* {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+html {
+    font-size: 62.5%;
+}
+
+body {
+    min-height: 60rem;
+}
+
+#main {
+    width: 100%;
+    height: 100%;
+}
+
+.btn {
+    background-color: var(--btn-color);
+    color: var(--white-color);
+    font-weight: 500;
+    border: none;
+    border-radius: 3px;
+
+}
+
+.btn:hover {
+    cursor: pointer;
+    background-color: var(--btn-hover-color);
+}
+
+@keyframes showModal {
+    from {
+        opacity: 0;
+        transform: translateY(-140px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}

@@ -1,0 +1,20 @@
+<!-- Borrow modal -->
+    <div class="borrow-modal">
+        <form class="body-content" action="BorrowBook">
+            <!-- Modal close -->
+            <div class="modal-close modal-close-js">
+                <i class="ti-close"></i>
+            </div>
+            <!-- Add-title -->
+            <div class="borrow-title">Borrow Book</div>
+
+            <!-- Form to fill in -->
+            <div class="borrow-info">
+            	<input class="info--inp reader-input-js" style="display: none;" required type="text" name="readerIDToBorrow" >
+                <span class="borrow-info__label">Books' ID: </span>
+                <input class="borrow-info__inp" required type="text" placeholder="Eg. 1" name="bookID">
+            </div>
+
+            <Button type="submit" class="borrow-modal-btn btn" name="borrowBook">BORROW</Button>
+        </form>
+    </div>

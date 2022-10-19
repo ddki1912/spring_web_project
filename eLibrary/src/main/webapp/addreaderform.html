@@ -1,0 +1,48 @@
+<!-- Add modal -->
+    <div class="add-modal reader-add-modal">
+        <form class="body-content" action="AddReader">
+            <!--Close btn-->
+            <div class="modal-close modal-close-js">
+                <i class="ti-close"></i>
+            </div>
+
+            <!-- Add-title -->
+            <div class="add-title">ADD READER</div>
+
+            <!-- Form to fill in -->
+            <ul class="info__list">
+                <li class="info__item">
+                    <div class="info__item--title">
+                        Name
+                        <span class="info__item--vip">*</span>
+                    </div>
+                    <div class="info__item--inp">
+                        <input class="info--inp" required type="text" placeholder="Eg. Nguyen Van A" name="readerName">
+                    </div>
+                </li>
+
+                <li class="info__item">
+                    <div class="info__item--title">
+                        Date of birth
+                        <span class="info__item--vip">*</span>
+                    </div>
+                    <div class="info__item--inp">
+                        <input class="info--inp" required type="date" placeholder="Eg. 01/01/2002" name="readerDob">
+                    </div>
+                </li>
+
+                <li class="info__item">
+                    <div class="info__item--title">
+                        Phone
+                        <span class="info__item--vip">*</span>
+                    </div>
+                    <div class="info__item--inp">
+                        <input class="info--inp" required type="tel" placeholder="Eg. 0918581223" name="readerPhone" pattern="(0)\d{9}">
+                    </div>
+                </li>
+            </ul>
+
+            <Button type="submit" class="add-modal-btn btn" name="readerAddBtn" value="add">ADD</Button>
+
+        </form>
+    </div>

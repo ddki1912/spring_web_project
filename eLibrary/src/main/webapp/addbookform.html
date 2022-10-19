@@ -1,0 +1,45 @@
+<!-- Add modal -->
+    <div class="add-modal books-add-modal">
+        <form class="body-content" action="AddBook">
+            <!--Close btn-->
+            <div class="modal-close modal-close-js">
+                <i class="ti-close"></i>
+            </div>
+
+            <!-- Add-title -->
+            <div class="add-title">ADD BOOK</div>
+
+            <!-- Form to fill in -->
+            <ul class="info__list">
+                <li class="info__item">
+                    <div class="info__item--title">
+                        Name
+                        <span class="info__item--vip">*</span>
+                    </div>
+                    <div class="info__item--inp">
+                        <input class="info--inp" required type="text" placeholder="Eg. Harry Potter" name="bookName">
+                    </div>
+                </li>
+
+                <li class="info__item">
+                    <div class="info__item--title">Author</div>
+                    <div class="info__item--inp">
+                        <input class="info--inp" type="text" placeholder="Eg. J.K.Rowling" name="author">
+                    </div>
+                </li>
+
+                <li class="info__item">
+                    <div class="info__item--title">
+                        Quantity
+                        <span class="info__item--vip">*</span>
+                    </div>
+                    <div class="info__item--inp">
+                        <input class="info--inp" required type="number" placeholder="Eg. 10" name="quantity">
+                    </div>
+                </li>
+            </ul>
+
+            <Button type="submit" class="add-modal-btn btn" name="addBookBtn">ADD</Button>
+
+        </form>
+    </div>

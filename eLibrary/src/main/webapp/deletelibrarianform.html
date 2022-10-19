@@ -1,0 +1,24 @@
+<!-- Delete modal -->
+<div id="delete-modal">
+	<form class="body-content" action="DeleteLibrarian" method="get">
+		<!-- Modal close -->
+		<div class="modal-close modal-close-js">
+			<i class="ti-close"></i>
+		</div>
+		<div class="delete__quest">Are you sure that you want to delete
+			this librarian?</div>
+		<div class="info__item" style="display: none;">
+			<div class="info__item--title">
+				ID <span class="info__item--vip">*</span>
+			</div>
+			<div class="info__item--inp">
+				<input class="info--inp info-input-js" required type="text"
+					placeholder="Eg. 100001" name="libraID">
+			</div>
+		</div>
+		<div class="delete__answer">
+			<button class="yes-btn btn" name="libraDeleteBtn" value="yes">YES</button>
+			<button class="no-btn btn" name="libraDeleteBtn" value="no">NO</button>
+		</div>
+	</form>
+</div>

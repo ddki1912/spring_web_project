@@ -1,0 +1,20 @@
+<!-- Return modal -->
+    <div class="return-modal">
+        <form class="body-content" action="ReturnBook">
+            <!-- Modal close -->
+            <div class="modal-close modal-close-js">
+                <i class="ti-close"></i>
+            </div>
+            <!-- Add-title -->
+            <div class="return-title">Return Book</div>
+
+            <!-- Form to fill in -->
+            <div class="return-info">
+            	<input class="info--inp reader-input-js" style="display: none;" required type="text" name="readerIDToRetun" >
+                <span class="return-info__label">Books' ID: </span>
+                <input class="return-info__inp" required type="text" placeholder="Eg. 1" name="bookID">
+            </div>
+
+            <Button type="submit" class="return-modal-btn btn" name="returnBook">RETURN</Button>
+        </form>
+    </div>

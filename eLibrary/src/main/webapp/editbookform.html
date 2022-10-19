@@ -1,0 +1,66 @@
+<!-- Edit modal -->
+<div class="edit-modal books-edit-modal">
+	<form class="body-content" action="EditBook">
+		<!--Close btn-->
+		<div class="modal-close modal-close-js">
+			<i class="ti-close"></i>
+		</div>
+
+		<!-- Add-title -->
+		<div class="edit-title">EDIT BOOK</div>
+
+		<!-- Form to fill in -->
+		<ul class="info__list">
+			<li class="info__item" style="display: none;">
+
+				<div class="info__item--title">
+					ID <span class="info__item--vip">*</span>
+				</div>
+
+				<div class="info__item--inp">
+					<input class="info--inp book-input-js" required type="text"
+						name="bookID">
+				</div>
+			</li>
+			
+			<li class="info__item">
+
+				<div class="info__item--title">
+					Name <span class="info__item--vip">*</span>
+				</div>
+
+				<div class="info__item--inp">
+					<input class="info--inp book-input-js" required type="text"
+						placeholder="Eg. Clean Code" name="bookName">
+				</div>
+			</li>
+			
+			<li class="info__item">
+
+				<div class="info__item--title">
+					Author <span class="info__item--vip">*</span>
+				</div>
+
+				<div class="info__item--inp">
+					<input class="info--inp book-input-js" required type="text"
+						placeholder="Eg. Robert Martin" name="author">
+				</div>
+			</li>
+			
+			<li class="info__item">
+
+				<div class="info__item--title">
+					Quantity <span class="info__item--vip">*</span>
+				</div>
+
+				<div class="info__item--inp">
+					<input class="info--inp book-input-js" required type="number"
+						placeholder="Eg. 10" name="quantity">
+				</div>
+			</li>
+		</ul>
+
+		<Button class="edit-modal-btn btn">UPDATE</Button>
+
+	</form>
+</div>

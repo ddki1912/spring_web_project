@@ -1,0 +1,67 @@
+<!-- Edit modal -->
+<div id="edit-modal">
+	<form class="body-content" action="EditLibrarian" method="get">
+		<!--Close btn-->
+		<div class="modal-close modal-close-js">
+			<i class="ti-close"></i>
+		</div>
+
+		<!-- Add-title -->
+		<div class="edit-title">EDIT LIBRARIAN</div>
+
+		<!-- Form to fill in -->
+		<ul class="info__list">
+			<li class="info__item" style="display: none;">
+				<div class="info__item--title">
+					ID <span class="info__item--vip">*</span>
+				</div>
+				<div class="info__item--inp">
+					<input class="info--inp info-input-js" required type="text"
+						placeholder="Eg. 100001" name="libraID">
+				</div>
+			</li>
+
+			<li class="info__item">
+				<div class="info__item--title">
+					Name <span class="info__item--vip">*</span>
+				</div>
+				<div class="info__item--inp">
+					<input class="info--inp info-input-js" required type="text"
+						placeholder="Eg. Nguyen Van A" name="libraName">
+				</div>
+			</li>
+
+			<li class="info__item">
+				<div class="info__item--title">
+					Date of birth <span class="info__item--vip">*</span>
+				</div>
+				<div class="info__item--inp">
+					<input class="info--inp info-input-js" required type="date"
+						placeholder="Eg. 01/01/2002" name="libraDob">
+				</div>
+			</li>
+
+			<li class="info__item">
+				<div class="info__item--title">
+					Phone <span class="info__item--vip">*</span>
+				</div>
+				<div class="info__item--inp">
+					<input class="info--inp info-input-js" required type="tel"
+						placeholder="Eg. 0918581223" pattern="(0)\d{9}" name="libraPhone">
+				</div>
+			</li>
+
+			<li class="info__item">
+				<div class="info__item--title">Email</div>
+				<div class="info__item--inp">
+					<input class="info--inp info-input-js" type="email"
+						placeholder="Eg. abc123@gmail.com" name="libraEmail">
+				</div>
+			</li>
+
+		</ul>
+
+		<Button class="edit-modal-btn btn" name="libraUpdateBtn" value="update">UPDATE</Button>
+
+	</form>
+</div>
