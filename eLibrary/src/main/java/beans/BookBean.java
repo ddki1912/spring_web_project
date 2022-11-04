@@ -6,7 +6,7 @@ public class BookBean {
 
 	private int id, quantity, borrowed;
 	private String name, author;
-	private List<Integer> borrowedBy;
+	private List<ReaderBean> readerList;
 
 	public BookBean() {
 		super();
@@ -39,12 +39,12 @@ public class BookBean {
 		return id;
 	}
 
-	public List<Integer> getBorrowedBy() {
-		return borrowedBy;
+	public List<ReaderBean> getReaderList() {
+		return readerList;
 	}
 
-	public void setBorrowedBy(List<Integer> borrowedBy) {
-		this.borrowedBy = borrowedBy;
+	public void setReaderList(List<ReaderBean> readerList) {
+		this.readerList = readerList;
 	}
 
 	public void setId(int id) {

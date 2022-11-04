@@ -196,4 +196,14 @@
     <servlet-name>EditBook</servlet-name>
     <url-pattern>/EditBook</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>DeleteBook</display-name>
+    <servlet-name>DeleteBook</servlet-name>
+    <servlet-class>servlets.DeleteBook</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>DeleteBook</servlet-name>
+    <url-pattern>/DeleteBook</url-pattern>
+  </servlet-mapping>
 </web-app>

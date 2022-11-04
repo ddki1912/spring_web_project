@@ -1,9 +1,9 @@
 create table books
 (
-	id int auto_increment,
-    name varchar(50) not null,
-    author varchar(50),
-    quantity int not null,
-    borrowed char(20) not null,
+	id bigint auto_increment,
+    name varchar(200) not null,
+    author varchar(200) not null,
+    quantity bigint not null,
+    borrowed bigint not null,
     primary key (id, name, quantity) 
 );

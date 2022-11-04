@@ -151,12 +151,16 @@
 }
 
 .login-error{
-	display: block;
+	display: none;
 	font-size: 1.4rem;
 	color: red;
 	padding: 0 2.8rem;
 	text-align: center;
 	width: 100%;
+}
+
+.login-error.active{
+	display: block;
 }
 
 /* Body */

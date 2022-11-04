@@ -14,18 +14,26 @@ import beans.ReaderBean;
 import dao.LibrarianDao;
 
 /**
- * Servlet implementation class SearchBook
+ * Servlet implementation class DeleteBook
  */
-public class SearchBook extends HttpServlet {
+public class DeleteBook extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		String id = request.getParameter("bookID");
+		String submit = request.getParameter("bookDeleteBtn");
+
+		if (submit.equals("yes")) {
+			BookBean bb = new BookBean();
+			bb.setId(Integer.parseInt(id));
+			LibrarianDao.deleteBook(bb);
+		}
+		
 		response.setContentType("text/html");
 		PrintWriter out = response.getWriter();
-		
 		out.println("<!DOCTYPE html>\r\n"
 				+ "<html lang=\"en\">\r\n"
 				+ "\r\n"
@@ -34,7 +42,7 @@ public class SearchBook extends HttpServlet {
 				+ "    <meta http-equiv=\"X-UA-Compatible\" content=\"IE=edge\">\r\n"
 				+ "    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\r\n"
 				+ "    <title>Librarian Section</title>\r\n"
-				+ "    <link rel=\"icon\" type=\"image/x-icon\" href=\"./asset/img/ava-title.png\">"
+				+ "	   <link rel=\"icon\" type=\"image/x-icon\" href=\"./asset/img/ava-title.png\">"
 				+ "    <link rel=\"stylesheet\" href=\"https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css\">\r\n"
 				+ "    <link rel=\"stylesheet\" href=\"https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css\">\r\n"
 				+ "    <link rel=\"stylesheet\" href=\"./asset/css/base.css\">\r\n"
@@ -55,7 +63,7 @@ public class SearchBook extends HttpServlet {
 				+ "                <!-- Search -->\r\n"
 				+ "                <form action=\"SearchReader\" class=\"search\">\r\n"
 				+ "                    <input class=\"search__inp\" type=\"search\" placeholder=\"Search reader\" name=\"searchReader\">\r\n"
-				+ "                    <button type=\"submit\" class=\"search-btn\" name=\"searchReaderBtn\">\r\n"
+				+ "                    <button class=\"search-btn\" type=\"submit\" name=\"searchReaderBtn\">\r\n"
 				+ "                        <i class=\"search__icon ti-search\"></i>\r\n"
 				+ "                    </button>\r\n"
 				+ "                </form>\r\n"
@@ -126,7 +134,7 @@ public class SearchBook extends HttpServlet {
 				+ "                <!-- Search -->\r\n"
 				+ "                <form action=\"SearchBook\" class=\"search\">\r\n"
 				+ "                    <input class=\"search__inp\" type=\"search\" placeholder=\"Search book\" name=\"searchBook\">\r\n"
-				+ "                    <button type=\"submit\" class=\"search-btn\" name=\"searchBookBtn\">\r\n"
+				+ "                    <button class=\"search-btn\" type=\"submit\" name=\"searchBookBtn\">\r\n"
 				+ "                        <i class=\"search__icon ti-search\"></i>\r\n"
 				+ "                    </button>\r\n"
 				+ "                </form>\r\n"
@@ -152,102 +160,51 @@ public class SearchBook extends HttpServlet {
 				+ "							   <th class=\"books-list__heading\"></th>\r\n"
 				+ "                        </tr>");
 		
-		String name = request.getParameter("searchBook");
+		List<BookBean> bookList = LibrarianDao.viewBook();
 		
-		if(name.equals("")) {
-			List<BookBean> bookList = LibrarianDao.viewBook();
+		for(BookBean bean : bookList) {
+			out.println("<tr class=\"books-list__item books-item-js\">\r\n"
+					+ "                            <td class=\"books-list__value books-item-value-js\">"+bean.getId()+"</td>\r\n"
+					+ "                            <td class=\"books-list__value books-item-value-js\">"+bean.getName()+"</td>\r\n"
+					+ "                            <td class=\"books-list__value books-item-value-js\">"+bean.getAuthor()+"</td>\r\n"
+					+ "                            <td class=\"books-list__value books-item-value-js\">"+bean.getQuantity()+"</td>\r\n"
+					+ "                            <td class=\"books-list__value\">"+bean.getBorrowed()+"</td>\r\n"
+					+ "							   <td class=\"books-list__value\">\r\n"
+					+ "                                <i class=\"show-borrowed-icon fa-solid fa-eye show-borrowed-js\"></i>\r\n"
+					+ "								   <div class=\"show-borrowed-list borrowed-list-modal\">\r\n"
+					+ "                                    <div class=\"body-content\">\r\n"
+					+ "                            \r\n"
+					+ "                                        <div class=\"modal-close modal-close-js\">\r\n"
+					+ "                                            <i class=\"ti-close\"></i>\r\n"
+					+ "                                        </div>\r\n"
+					+ "                            \r\n"
+					+ "                                        <table class=\"borrowed-list\">\r\n"
+					+ "                                            <tr class=\"borrowed-list__item\">\r\n"
+					+ "                                                <th class=\"borrowed-list__title\" colspan=\"2\">Readers' Information</th>\r\n"
+					+ "                                            </tr>\r\n"
+					+ "                                            <tr class=\"borrowed-list__item\">\r\n"
+					+ "                                                <th class=\"borrowed-list__heading\">Reader's ID</th>\r\n"
+					+ "                                                <th class=\"borrowed-list__heading\">Borrow on</th>\r\n"
+					+ "                                            </tr>");
 			
-			for(BookBean bean : bookList) {
-				out.println("<tr class=\"books-list__item books-item-js\">\r\n"
-						+ "                            <td class=\"books-list__value books-item-value-js\">"+bean.getId()+"</td>\r\n"
-						+ "                            <td class=\"books-list__value books-item-value-js\">"+bean.getName()+"</td>\r\n"
-						+ "                            <td class=\"books-list__value books-item-value-js\">"+bean.getAuthor()+"</td>\r\n"
-						+ "                            <td class=\"books-list__value books-item-value-js\">"+bean.getQuantity()+"</td>\r\n"
-						+ "                            <td class=\"books-list__value\">"+bean.getBorrowed()+"</td>\r\n"
-						+ "							   <td class=\"books-list__value\">\r\n"
-						+ "                                <i class=\"show-borrowed-icon fa-solid fa-eye show-borrowed-js\"></i>\r\n"
-						+ "								   <div class=\"show-borrowed-list borrowed-list-modal\">\r\n"
-						+ "                                    <div class=\"body-content\">\r\n"
-						+ "                            \r\n"
-						+ "                                        <div class=\"modal-close modal-close-js\">\r\n"
-						+ "                                            <i class=\"ti-close\"></i>\r\n"
-						+ "                                        </div>\r\n"
-						+ "                            \r\n"
-						+ "                                        <table class=\"borrowed-list\">\r\n"
-						+ "                                            <tr class=\"borrowed-list__item\">\r\n"
-						+ "                                                <th class=\"borrowed-list__title\" colspan=\"2\">Readers' Information</th>\r\n"
-						+ "                                            </tr>\r\n"
-						+ "                                            <tr class=\"borrowed-list__item\">\r\n"
-						+ "                                                <th class=\"borrowed-list__heading\">Reader's ID</th>\r\n"
-						+ "                                                <th class=\"borrowed-list__heading\">Borrow on</th>\r\n"
-						+ "                                            </tr>");
-				
-				List<ReaderBean> borrowedList = bean.getReaderList();
-				
-				for(ReaderBean reader : borrowedList) {
-					out.println("<tr class=\"borrowed-list__item borrowed-item-js\">\r\n"
-							+ "                                                <td class=\"borrowed-list__value\">"+reader.getId()+"</td>\r\n"
-							+ "                                                <td class=\"borrowed-list__value\">"+reader.getBorrowOn()+"</td>\r\n"
-							+ "                                            </tr>");
-				}
-				
-				out.println("</table>\r\n"
-						+ "                                    </div>\r\n"
-						+ "                                </div>"
-						+ "                            </td>\r\n"
-						+ "                            <td class=\"books-item__function\">\r\n"
-						+ "                                <i class=\"edit-btn fa-solid fa-pen books-edit-js\"></i>\r\n"
-						+ "                                <i class=\"delete-btn fa-solid fa-trash books-delete-js\"></i>\r\n"
-						+ "                            </td>\r\n"
-						+ "                        </tr>");
-			}
-		} else {
-			List<BookBean> bookList = LibrarianDao.viewByNameOrAuthor(name);
+			List<ReaderBean> borrowedList = bean.getReaderList();
 			
-			for(BookBean bean : bookList) {
-				out.println("<tr class=\"books-list__item books-item-js\">\r\n"
-						+ "                            <td class=\"books-list__value books-item-value-js\">"+bean.getId()+"</td>\r\n"
-						+ "                            <td class=\"books-list__value books-item-value-js\">"+bean.getName()+"</td>\r\n"
-						+ "                            <td class=\"books-list__value books-item-value-js\">"+bean.getAuthor()+"</td>\r\n"
-						+ "                            <td class=\"books-list__value books-item-value-js\">"+bean.getQuantity()+"</td>\r\n"
-						+ "                            <td class=\"books-list__value\">"+bean.getBorrowed()+"</td>\r\n"
-						+ "							   <td class=\"books-list__value\">\r\n"
-						+ "                                <i class=\"show-borrowed-icon fa-solid fa-eye show-borrowed-js\"></i>\r\n"
-						+ "								   <div class=\"show-borrowed-list borrowed-list-modal\">\r\n"
-						+ "                                    <div class=\"body-content\">\r\n"
-						+ "                            \r\n"
-						+ "                                        <div class=\"modal-close modal-close-js\">\r\n"
-						+ "                                            <i class=\"ti-close\"></i>\r\n"
-						+ "                                        </div>\r\n"
-						+ "                            \r\n"
-						+ "                                        <table class=\"borrowed-list\">\r\n"
-						+ "                                            <tr class=\"borrowed-list__item\">\r\n"
-						+ "                                                <th class=\"borrowed-list__title\" colspan=\"2\">Readers' Information</th>\r\n"
-						+ "                                            </tr>\r\n"
-						+ "                                            <tr class=\"borrowed-list__item\">\r\n"
-						+ "                                                <th class=\"borrowed-list__heading\">Reader's ID</th>\r\n"
-						+ "                                                <th class=\"borrowed-list__heading\">Borrow on</th>\r\n"
+			for(ReaderBean reader : borrowedList) {
+				out.println("<tr class=\"borrowed-list__item borrowed-item-js\">\r\n"
+						+ "                                                <td class=\"borrowed-list__value\">"+reader.getId()+"</td>\r\n"
+						+ "                                                <td class=\"borrowed-list__value\">"+reader.getBorrowOn()+"</td>\r\n"
 						+ "                                            </tr>");
-				
-				List<ReaderBean> borrowedList = bean.getReaderList();
-				
-				for(ReaderBean reader : borrowedList) {
-					out.println("<tr class=\"borrowed-list__item borrowed-item-js\">\r\n"
-							+ "                                                <td class=\"borrowed-list__value\">"+reader.getId()+"</td>\r\n"
-							+ "                                                <td class=\"borrowed-list__value\">"+reader.getBorrowOn()+"</td>\r\n"
-							+ "                                            </tr>");
-				}
-				
-				out.println("</table>\r\n"
-						+ "                                    </div>\r\n"
-						+ "                                </div>"
-						+ "                            </td>\r\n"
-						+ "                            <td class=\"books-item__function\">\r\n"
-						+ "                                <i class=\"edit-btn fa-solid fa-pen books-edit-js\"></i>\r\n"
-						+ "                                <i class=\"delete-btn fa-solid fa-trash books-delete-js\"></i>\r\n"
-						+ "                            </td>\r\n"
-						+ "                        </tr>");
 			}
+			
+			out.println("</table>\r\n"
+					+ "                                    </div>\r\n"
+					+ "                                </div>"
+					+ "                            </td>\r\n"
+					+ "                            <td class=\"books-item__function\">\r\n"
+					+ "                                <i class=\"edit-btn fa-solid fa-pen books-edit-js\"></i>\r\n"
+					+ "                                <i class=\"delete-btn fa-solid fa-trash books-delete-js\"></i>\r\n"
+					+ "                            </td>\r\n"
+					+ "                        </tr>");
 		}
 		
 		out.println("</table>\r\n"

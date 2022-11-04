@@ -1,7 +1,7 @@
 create table readers
 (
-	id int auto_increment,
-    name varchar(50) not null,
+	id bigint auto_increment,
+    name varchar(200) not null,
     dob date not null,
     phone char(20) not null,
     primary key (id, name, dob, phone)

@@ -23,7 +23,7 @@ public class ReturnBook extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		response.setContentType("text/html");
 		
-		String readerId = request.getParameter("readerIDToRetun");
+		String readerId = request.getParameter("readerID");
 		String bookId = request.getParameter("bookID");
 		
 		ReaderBean reader = new ReaderBean();

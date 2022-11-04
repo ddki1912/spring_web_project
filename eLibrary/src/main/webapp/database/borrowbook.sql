@@ -1,7 +1,7 @@
 create table borrowbook
 (
-	readerId int not null,
-    bookId int not null,
+	readerId bigint not null,
+    bookId bigint not null,
     borrowOn date not null,
     returnStatus char(50) not null,
     primary key (readerId, bookId, borrowOn, returnStatus),

@@ -6,6 +6,7 @@ const loginModalContent = document.querySelector(".js-modal-content");
 const loginClose = document.querySelector(".js-modal-close");
 const loginTitle = document.querySelector(".js-modal-title");
 const loginBtn = document.querySelector(".login-btn")
+const loginError = document.querySelector(".login-error");
 
 function showLoginForm() {
 	loginModal.classList.add("active");
@@ -18,11 +19,13 @@ function closeLogin() {
 admin.onclick = function() {
 	loginTitle.innerHTML = "Admin Login";
 	loginModalContent.setAttribute("action", "AdminLogin");
+	loginError.classList.remove("active");
 }
 
 libra.onclick = function() {
 	loginTitle.innerHTML = "Librarian Login";
 	loginModalContent.setAttribute("action", "LibrarianLogin");
+	loginError.classList.remove("active");
 }
 
 for (const login of loginForm) {

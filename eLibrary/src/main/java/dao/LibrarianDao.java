@@ -115,8 +115,8 @@ public class LibrarianDao {
 
 		try {
 			Connection connect = DB.getMySQLConnection();
-			PreparedStatement ps = connect.prepareStatement("select * from readers where name=?");
-			ps.setString(1, name.trim());
+			PreparedStatement ps = connect.prepareStatement("select * from readers where name like ?");
+			ps.setString(1, "%" + name.trim() + "%");
 			ResultSet rs = ps.executeQuery();
 
 			while (rs.next()) {
@@ -149,7 +149,7 @@ public class LibrarianDao {
 		return rbList;
 	}
 
-	public static boolean checkToDelete(ReaderBean rb) {
+	public static boolean checkToDeleteReader(ReaderBean rb) {
 		try {
 			Connection connect = DB.getMySQLConnection();
 			PreparedStatement ps = connect.prepareStatement("select * from borrowbook where readerId=?");
@@ -170,7 +170,7 @@ public class LibrarianDao {
 	public static int deleteReader(ReaderBean rb) {
 		int status = 0;
 		try {
-			if (checkToDelete(rb)) {
+			if (checkToDeleteReader(rb)) {
 				Connection connect = DB.getMySQLConnection();
 				PreparedStatement ps = connect.prepareStatement("delete from borrowbook where readerId=?");
 				ps.setInt(1, rb.getId());
@@ -274,15 +274,17 @@ public class LibrarianDao {
 				bb.setQuantity(rs.getInt("quantity"));
 				bb.setBorrowed(rs.getInt("borrowed"));
 				PreparedStatement ps2 = connect
-						.prepareStatement("select (readerId) from borrowbook where bookId=? and returnStatus='NO'");
+						.prepareStatement("select * from borrowbook where bookId=? and returnStatus='NO'");
 				ps2.setInt(1, bb.getId());
 				ResultSet rs2 = ps2.executeQuery();
-				List<Integer> borrowedBy = new ArrayList<>();
+				List<ReaderBean> borrowedList = new ArrayList<>();
 				while (rs2.next()) {
-					int readerId = rs2.getInt("readerId");
-					borrowedBy.add(readerId);
+					ReaderBean rb = new ReaderBean();
+					rb.setId(rs2.getInt("readerId"));
+					rb.setBorrowOn(rs2.getDate("borrowOn"));
+					borrowedList.add(rb);
 				}
-				bb.setBorrowedBy(borrowedBy);
+				bb.setReaderList(borrowedList);
 				bbList.add(bb);
 			}
 			connect.close();
@@ -296,9 +298,9 @@ public class LibrarianDao {
 		List<BookBean> bbList = new ArrayList<>();
 		try {
 			Connection connect = DB.getMySQLConnection();
-			PreparedStatement ps = connect.prepareStatement("select * from books where name=? or author=?");
-			ps.setString(1, s);
-			ps.setString(2, s);
+			PreparedStatement ps = connect.prepareStatement("select * from books where name like ? or author like ?");
+			ps.setString(1, "%" + s + "%");
+			ps.setString(2, "%" + s + "%");
 			ResultSet rs = ps.executeQuery();
 			while (rs.next()) {
 				BookBean bb = new BookBean();
@@ -308,16 +310,17 @@ public class LibrarianDao {
 				bb.setQuantity(rs.getInt("quantity"));
 				bb.setBorrowed(rs.getInt("borrowed"));
 				PreparedStatement ps2 = connect
-						.prepareStatement("select (readerId) from borrowbook where bookId=? and returnStatus='NO'");
+						.prepareStatement("select * from borrowbook where bookId=? and returnStatus='NO'");
 				ps2.setInt(1, bb.getId());
 				ResultSet rs2 = ps2.executeQuery();
-				List<Integer> borrowedBy = new ArrayList<>();
+				List<ReaderBean> borrowedList = new ArrayList<>();
 				while (rs2.next()) {
-					int readerId = rs2.getInt("readerId");
-					borrowedBy.add(readerId);
+					ReaderBean rb = new ReaderBean();
+					rb.setId(rs2.getInt("readerId"));
+					rb.setBorrowOn(rs2.getDate("borrowOn"));
+					borrowedList.add(rb);
 				}
-				bb.setBorrowedBy(borrowedBy);
-
+				bb.setReaderList(borrowedList);
 				bbList.add(bb);
 			}
 			connect.close();
@@ -325,6 +328,52 @@ public class LibrarianDao {
 			System.out.println(e);
 		}
 		return bbList;
+	}
+
+	public static boolean checkToDeleteBook(BookBean bb) {
+		try {
+			Connection connect = DB.getMySQLConnection();
+			PreparedStatement ps = connect.prepareStatement("select * from books where id=?");
+			ps.setInt(1, bb.getId());
+			ResultSet rs = ps.executeQuery();
+			if (rs.next() && rs.getInt("borrowed") == 0) {
+				PreparedStatement ps2 = connect.prepareStatement("select * from borrowbook where bookId=?");
+				ps2.setInt(1, bb.getId());
+				ResultSet rs2 = ps2.executeQuery();
+				while (rs2.next()) {
+					if (rs2.getString("returnStatus").equals("NO")) {
+						return false;
+					}
+				}
+			} else {
+				return false;
+			}
+			connect.close();
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+		return true;
+	}
+
+	public static int deleteBook(BookBean bb) {
+		int status = 0;
+		if (checkToDeleteBook(bb)) {
+			try {
+				Connection connect = DB.getMySQLConnection();
+				PreparedStatement ps = connect.prepareStatement("delete from borrowbook where bookId=?");
+				ps.setInt(1, bb.getId());
+				status = ps.executeUpdate();
+				if (status >= 0) {
+					PreparedStatement ps2 = connect.prepareStatement("delete from books where id=?");
+					ps2.setInt(1, bb.getId());
+					status = ps2.executeUpdate();
+				}
+				connect.close();
+			} catch (Exception e) {
+				System.out.println(e);
+			}
+		}
+		return status;
 	}
 
 	public static int getBorrowedBook(int bookId) {
@@ -362,6 +411,8 @@ public class LibrarianDao {
 						return false;
 					}
 				}
+			} else {
+				return false;
 			}
 			connect.close();
 

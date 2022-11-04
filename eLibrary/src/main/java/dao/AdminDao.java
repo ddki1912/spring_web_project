@@ -15,8 +15,7 @@ public class AdminDao {
 		boolean ok = false;
 		try {
 			Connection connect = DB.getMySQLConnection();
-			PreparedStatement ps = connect
-					.prepareStatement("select * from librarians where phone=?");
+			PreparedStatement ps = connect.prepareStatement("select * from librarians where phone=?");
 			ps.setString(1, lb.getPhone());
 //			String[] data = new SimpleDateFormat("dd/MM/yyyy").format(lb.getDob()).split("/");
 //			String newDob = data[2] + "-" + data[1] + "-" + data[0];
@@ -108,8 +107,8 @@ public class AdminDao {
 
 		try {
 			Connection connect = DB.getMySQLConnection();
-			PreparedStatement ps = connect.prepareStatement("select * from librarians where name=?");
-			ps.setString(1, name.trim());
+			PreparedStatement ps = connect.prepareStatement("select * from librarians where name like ?");
+			ps.setString(1, "%" + name.trim() + "%");
 			ResultSet rs = ps.executeQuery();
 			while (rs.next()) {
 				LibrarianBean lb = new LibrarianBean();
@@ -158,7 +157,7 @@ public class AdminDao {
 			if (rs.next()) {
 				status = true;
 			} else {
-				System.out.print("Your ID or your password was incorrect!");
+				System.out.println("Your ID or your password was incorrect!");
 			}
 			connect.close();
 

@@ -2,6 +2,7 @@ package servlets;
 
 import java.io.*;
 
+import dao.AdminDao;
 //import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 //import jakarta.servlet.annotation.WebServlet;
@@ -26,7 +27,7 @@ public class AdminLogin extends HttpServlet {
 
 		String account = request.getParameter("user");
 		String password = request.getParameter("password");
-		if (account.equals("admin") && password.equals("admin123")) {
+		if (AdminDao.authenticate(account, password)) {
 			HttpSession session = request.getSession();
 			session.setAttribute("admin", "true");
 			
@@ -52,6 +53,7 @@ public class AdminLogin extends HttpServlet {
 					+ "<body>");
 			request.getRequestDispatcher("navhome.html").include(request, response);
 			request.getRequestDispatcher("adminloginform.html").include(request, response);
+
 			out.println("<script src=\"./asset/js/login.js\">\r\n"
 					+ "    </script>\r\n"
 					+ "</body>\r\n"
