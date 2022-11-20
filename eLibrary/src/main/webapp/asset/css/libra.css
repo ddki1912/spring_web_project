@@ -158,6 +158,15 @@
     margin: 50px 0px 0px;
 }
 
+.view-btn{
+    position: absolute;
+    top: 0;
+    left: 0;
+    font-size: 1.8rem;
+    padding: 10px 20px;
+    margin-left: 30px;
+}
+
 .add-btn {
     position: absolute;
     top: 0;

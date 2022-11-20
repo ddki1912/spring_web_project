@@ -19,13 +19,17 @@ function closeLogin() {
 admin.onclick = function() {
 	loginTitle.innerHTML = "Admin Login";
 	loginModalContent.setAttribute("action", "AdminLogin");
-	loginError.classList.remove("active");
+	if (loginError) {
+		loginError.classList.remove("active");
+	}
 }
 
 libra.onclick = function() {
 	loginTitle.innerHTML = "Librarian Login";
 	loginModalContent.setAttribute("action", "LibrarianLogin");
-	loginError.classList.remove("active");
+	if (loginError) {
+		loginError.classList.remove("active");
+	}
 }
 
 for (const login of loginForm) {

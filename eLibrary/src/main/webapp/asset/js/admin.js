@@ -74,6 +74,9 @@ for (const content of modalContent) {
 
 const notice = document.querySelector(".notice-js");
 
-notice.onclick = function(){
-    notice.classList.remove(active);
+if (notice) {
+	notice.onclick = function() {
+		notice.classList.remove(active);
+	}
 }
+

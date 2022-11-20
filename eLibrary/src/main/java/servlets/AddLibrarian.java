@@ -55,7 +55,7 @@ public class AddLibrarian extends HttpServlet {
 				+ "\r\n"
 				+ "                <!-- Add librarian -->\r\n"
 				+ "                <div id=\"add\">\r\n"
-				+ "                    <button class=\"add-btn btn add-js\">+ Add librarian</button>\r\n"
+				+ "                    <button class=\"add-btn btn add-js\">+ Add a librarian</button>\r\n"
 				+ "                </div>");
 		
 		out.println("<div id=\"table\">\r\n" 
@@ -130,7 +130,7 @@ public class AddLibrarian extends HttpServlet {
 		request.getRequestDispatcher("deletelibrarianform.html").include(request, response);
 		
 		out.println("<script src=\"./asset/js/admin.js\">\r\n"
-				+ "    </script>\r\n"
+				+ "    </script>\r\n" 
 				+ "</body>\r\n"
 				+ "\r\n"
 				+ "</html>");

@@ -18,5 +18,4 @@ public class AdminLogout extends HttpServlet {
 		request.getSession().invalidate();
 		response.sendRedirect("index.html");
 	}
-
 }

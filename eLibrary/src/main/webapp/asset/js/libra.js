@@ -133,11 +133,11 @@ for (let i = 0; i < borrowBtn.length; i++) {
 for (let i = 0; i < returnBtn.length; i++) {
 	returnBtn[i].addEventListener("click", function() {
 		let readerItemValue = readerItem[i].querySelector(".reader-item-value-js");
-        let bookIdReaderItemValue = readerItem[i].querySelector(".book-id-js");
+		let bookIdReaderItemValue = readerItem[i].querySelector(".book-id-js");
 		let readerIdToReturn = returnModal[i].querySelector(".reader-input-js");
-        let bookIdToReturn = returnModal[i].querySelector(".book-input-js");
+		let bookIdToReturn = returnModal[i].querySelector(".book-input-js");
 		readerIdToReturn.value = readerItemValue.innerHTML;
-        bookIdToReturn.value = bookIdReaderItemValue.innerHTML;
+		bookIdToReturn.value = bookIdReaderItemValue.innerHTML;
 	});
 }
 
@@ -206,11 +206,14 @@ books.addEventListener("click", function() {
 
 // Notice javascript
 
+// Add notice
+
 const notice = document.querySelector(".notice-js");
 
-notice.onclick = function() {
-	notice.classList.remove(active);
+if (notice) {
+	notice.onclick = function() {
+		notice.classList.remove(active);
+	}
 }
-
 
 

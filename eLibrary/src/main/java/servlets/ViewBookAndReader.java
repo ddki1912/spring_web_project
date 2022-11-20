@@ -14,9 +14,9 @@ import beans.ReaderBean;
 import dao.LibrarianDao;
 
 /**
- * Servlet implementation class AddBook
+ * Servlet implementation class ViewBookAndReader
  */
-public class AddBook extends HttpServlet {
+public class ViewBookAndReader extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	/**
@@ -25,6 +25,7 @@ public class AddBook extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		response.setContentType("text/html");
 		PrintWriter out = response.getWriter();
+	
 		out.println("<!DOCTYPE html>\r\n"
 				+ "<html lang=\"en\">\r\n"
 				+ "\r\n"
@@ -33,12 +34,12 @@ public class AddBook extends HttpServlet {
 				+ "    <meta http-equiv=\"X-UA-Compatible\" content=\"IE=edge\">\r\n"
 				+ "    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\r\n"
 				+ "    <title>Librarian Section</title>\r\n"
-				+ "	   <link rel=\"icon\" type=\"image/x-icon\" href=\"./asset/img/ava-title.png\">"
+				+ "    <link rel=\"icon\" type=\"image/x-icon\" href=\"./asset/img/ava-title.png\">"
 				+ "    <link rel=\"stylesheet\" href=\"https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css\">\r\n"
 				+ "    <link rel=\"stylesheet\" href=\"https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css\">\r\n"
+				+ "    <link rel=\"stylesheet\" href=\"./asset/font/themify-icons-font/themify-icons/themify-icons.css\">\r\n"
 				+ "    <link rel=\"stylesheet\" href=\"./asset/css/base.css\">\r\n"
 				+ "    <link rel=\"stylesheet\" href=\"./asset/css/libra.css\">\r\n"
-				+ "    <link rel=\"stylesheet\" href=\"./asset/font/themify-icons-font/themify-icons/themify-icons.css\">\r\n"
 				+ "</head>\r\n"
 				+ "\r\n"
 				+ "<body>\r\n"
@@ -54,7 +55,7 @@ public class AddBook extends HttpServlet {
 				+ "                <!-- Search -->\r\n"
 				+ "                <form action=\"SearchReader\" class=\"search\">\r\n"
 				+ "                    <input class=\"search__inp\" type=\"search\" placeholder=\"Search reader\" name=\"searchReader\">\r\n"
-				+ "                    <button class=\"search-btn\" type=\"submit\" name=\"searchReaderBtn\">\r\n"
+				+ "                    <button class=\"search-btn\" type=\"submit\" name=\"searchBtn\">\r\n"
 				+ "                        <i class=\"search__icon ti-search\"></i>\r\n"
 				+ "                    </button>\r\n"
 				+ "                </form>\r\n"
@@ -82,16 +83,16 @@ public class AddBook extends HttpServlet {
 				+ "                        </tr>");
 		
 		List<ReaderBean> readerList = LibrarianDao.viewReader();
-		
+
 		for (ReaderBean bean : readerList) {
 			out.println("<tr class=\"reader-list__item reader-item-js\">\r\n"
-					+ "                            <td class=\"reader-list__value reader-item-value-js\">"+bean.getId()+"</td>\r\n"
-					+ "                            <td class=\"reader-list__value reader-item-value-js\">"+bean.getName()+"</td>\r\n"
-					+ "                            <td class=\"reader-list__value reader-item-value-js\">"+bean.getDob()+"</td>\r\n"
-					+ "                            <td class=\"reader-list__value reader-item-value-js\">"+bean.getPhone()+"</td>\r\n"
-					+ "                            <td class=\"reader-list__value book-id-js\">"+bean.getBookId()+"</td>\r\n"
-					+ "                            <td class=\"reader-list__value\">"+bean.getBorrowDate()+"</td>\r\n"
-					+ "                            <td class=\"reader-list__value\">"+bean.getReturnStatus()+"</td>\r\n"
+					+ "                            <td class=\"reader-list__value reader-item-value-js\">" + bean.getId() + "</td>\r\n"
+					+ "                            <td class=\"reader-list__value reader-item-value-js\">" + bean.getName() + "</td>\r\n"
+					+ "                            <td class=\"reader-list__value reader-item-value-js\">" + bean.getDob() + "</td>\r\n"
+					+ "                            <td class=\"reader-list__value reader-item-value-js\">" + bean.getPhone() + "</td>\r\n"
+					+ "                            <td class=\"reader-list__value book-id-js\">" + bean.getBookId() + "</td>\r\n"
+					+ "                            <td class=\"reader-list__value\">" + bean.getBorrowDate() + "</td>\r\n"
+					+ "                            <td class=\"reader-list__value\">" + bean.getReturnStatus() + "</td>\r\n"
 					+ "                            <td class=\"reader-item__function\">\r\n"
 					+ "                                <i class=\"borrow-btn fa-solid fa-book borrow-js\"></i>\r\n"
 					+ "                                <div class=\"return-modal-adjust\">\r\n"
@@ -125,7 +126,7 @@ public class AddBook extends HttpServlet {
 				+ "                <!-- Search -->\r\n"
 				+ "                <form action=\"SearchBook\" class=\"search\">\r\n"
 				+ "                    <input class=\"search__inp\" type=\"search\" placeholder=\"Search book\" name=\"searchBook\">\r\n"
-				+ "                    <button class=\"search-btn\" type=\"submit\" name=\"searchBookBtn\">\r\n"
+				+ "                    <button class=\"search-btn\">\r\n"
 				+ "                        <i class=\"search__icon ti-search\"></i>\r\n"
 				+ "                    </button>\r\n"
 				+ "                </form>\r\n"
@@ -149,25 +150,8 @@ public class AddBook extends HttpServlet {
 				+ "                            <th class=\"books-list__heading\">Borrowed</th>\r\n"
 				+ "                            <th class=\"books-list__heading\">Borrowed by</th>\r\n"
 				+ "							   <th class=\"books-list__heading\"></th>\r\n"
-				+ "                        </tr>");
+				+ "                        </tr>");		
 		
-		String name = request.getParameter("bookName");
-		String author = request.getParameter("author");
-		String quantity = request.getParameter("quantity");
-
-		BookBean bb = new BookBean(name, author, Integer.parseInt(quantity));
-		bb.setBorrowed(0);
-
-		int ok = 0;
-
-		if (!LibrarianDao.checkBookExisted(bb)) {
-			ok = 1;
-		} else {
-			ok = 2;
-		}
-
-		LibrarianDao.addBook(bb);
-
 		List<BookBean> bookList = LibrarianDao.viewBook();
 		
 		for(BookBean bean : bookList) {
@@ -222,20 +206,6 @@ public class AddBook extends HttpServlet {
 				+ "\r\n"
 				+ "    </div>");
 		
-		if (ok == 1) {
-			out.println("<div class=\"notice success active notice-js\">\r\n"
-					+ "        <span class=\"notice-content notice-content-js\">\r\n"
-					+ "            The book was successfully added!\r\n"
-					+ "        </span>\r\n"
-					+ "    </div>");
-		} else {
-			out.println("<div class=\"notice fail active notice-js\">\r\n"
-					+ "        <span class=\"notice-content notice-content-js\">\r\n"
-					+ "            The books has existed, so the number of books increased!\r\n"
-					+ "        </span>\r\n"
-					+ "    </div>");
-		}
-		
 		request.getRequestDispatcher("addreaderform.html").include(request, response);
 		request.getRequestDispatcher("editreaderform.html").include(request, response);
 		request.getRequestDispatcher("deletereaderform.html").include(request, response);
@@ -251,7 +221,6 @@ public class AddBook extends HttpServlet {
 				+ "\r\n"
 				+ "</html>");
 		out.close();
-		
 	}
 
 }

@@ -395,7 +395,7 @@ public class LibrarianDao {
 		return borrowed;
 	}
 
-	public static boolean checkToBorrow(int readerId, int bookId) {
+	public static int checkToBorrow(int readerId, int bookId) {
 		try {
 			Connection connect = DB.getMySQLConnection();
 			PreparedStatement ps = connect.prepareStatement("select * from books where id=? and quantity>borrowed");
@@ -408,11 +408,11 @@ public class LibrarianDao {
 				ResultSet rs2 = ps2.executeQuery();
 				while (rs2.next()) {
 					if (!rs2.getString("returnStatus").equals("YES")) {
-						return false;
+						return -1;
 					}
 				}
 			} else {
-				return false;
+				return 0;
 			}
 			connect.close();
 
@@ -420,13 +420,13 @@ public class LibrarianDao {
 			System.out.println(e);
 		}
 
-		return true;
+		return 1;
 	}
 
 	public static int borrowBook(ReaderBean rb, BookBean bb) {
 		int status = 0;
 		try {
-			if (checkToBorrow(rb.getId(), bb.getId())) {
+			if (checkToBorrow(rb.getId(), bb.getId()) > 0) {
 				Connection connect = DB.getMySQLConnection();
 				PreparedStatement ps = connect.prepareStatement(
 						"insert into borrowbook(readerId, bookId, borrowOn, returnStatus) values(?,?,?,?)");

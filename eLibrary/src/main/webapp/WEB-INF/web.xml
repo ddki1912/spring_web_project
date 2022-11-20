@@ -206,4 +206,14 @@
     <servlet-name>DeleteBook</servlet-name>
     <url-pattern>/DeleteBook</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>ViewBookAndReader</display-name>
+    <servlet-name>ViewBookAndReader</servlet-name>
+    <servlet-class>servlets.ViewBookAndReader</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ViewBookAndReader</servlet-name>
+    <url-pattern>/ViewBookAndReader</url-pattern>
+  </servlet-mapping>
 </web-app>

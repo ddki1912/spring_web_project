@@ -60,7 +60,10 @@ public class SearchLibrarian extends HttpServlet {
 					+ "\r\n"
 					+ "                <!-- Add librarian -->\r\n"
 					+ "                <div id=\"add\">\r\n"
-					+ "                    <button class=\"add-btn btn add-js\">+ Add librarian</button>\r\n"
+					+ "					   <form action=\"ViewLibrarian\" id=\"view\">\r\n"
+					+ "                        <input class=\"view-btn btn\" type=\"submit\" value=\"View all librarians\">\r\n"
+					+ "                    </form>\r\n"
+					+ "                    <button class=\"add-btn btn add-js\">+ Add a librarian</button>\r\n"
 					+ "                </div>");
 		
 			out.println("<div id=\"table\">\r\n" 
