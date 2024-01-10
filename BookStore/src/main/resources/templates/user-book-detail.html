@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<title>Book Store</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script src="https://kit.fontawesome.com/279cd13ff5.js"
+	crossorigin="anonymous"></script>
+
+<link rel="stylesheet"
+	href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css"
+	integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N"
+	crossorigin="anonymous">
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+	integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+	crossorigin="anonymous"></script>
+<script
+	src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"
+	integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+	crossorigin="anonymous"></script>
+<script
+	src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
+	integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+	crossorigin="anonymous"></script>
+
+<link rel="stylesheet" href="/css/style.css">
+<link rel="stylesheet" href="/css/responsive.css">
+</head>
+
+<body>
+	<nav class="navbar  navbar-expand-lg  sticky-top navbar-light  bg-info">
+		<a class="navbar-brand text-white"
+			th:href="${session.user}?'/user/books':'/user/home'"><h2>BookStore</h2></a>
+		<button class="navbar-toggler" type="button" data-toggle="collapse"
+			data-target="#navbarSupportedContent"
+			aria-controls="navbarSupportedContent" aria-expanded="false"
+			aria-label="Toggle navigation">
+			<span class="navbar-toggler-icon"></span>
+		</button>
+
+		<div class="collapse navbar-collapse" id="navbarSupportedContent">
+			<ul class="navbar-nav mr-auto">
+				<li class="nav-item"><a class="nav-link text-white"
+					th:href="@{/user/books}">Our Books</a></li>
+				<li class="nav-item dropdown"><a
+					class="nav-link dropdown-toggle text-white" href="#"
+					id="navbarDropdown" role="button" data-toggle="dropdown"
+					aria-haspopup="true" aria-expanded="false"> Category </a>
+					<div class="dropdown-menu" aria-labelledby="navbarDropdown">
+						<div th:each="category : ${categories}">
+							<a class="dropdown-item" style="font-family: 'Playfair Display', serif;"
+								th:href="@{/user/category/{categoryName}(categoryName=${category.getName})}"
+								th:text="${category.getName}"></a>
+						</div>
+					</div></li>
+			</ul>
+			<ul class="navbar-nav ml-auto">
+				<li class="nav-item" th:if="${session.user}"><a
+					class="nav-link text-white" th:href="@{/user/order}">Order</a></li>
+				<li class="nav-item" th:if="${session.user}"><a
+					class="nav-link text-white" th:href="@{/user/cart}"><i
+						class="fa-solid fa-cart-shopping"></i>Cart</a></li>
+
+				<li class="nav-item" th:unless="${session.user}"><a
+					class="nav-link text-white" href="/user/login">Login</a></li>
+
+				<li class="nav-item" th:unless="${session.user}"><a
+					class="nav-link text-white" href="/user/register">Sign up</a></li>
+
+				<li class="nav-item dropdown" th:if="${session.user}"><a
+					class="nav-link dropdown-toggle text-white" href="#"	
+					id="navbarDropdown" role="button" data-toggle="dropdown"
+					aria-haspopup="true" aria-expanded="false"
+					th:text="${session.user.getRealName}" style="font-weight: bold; font-family: 'Playfair Display', serif;"></a>
+					<div class="dropdown-menu" aria-labelledby="navbarDropdown">
+						<a class="dropdown-item"
+							style="font-family: 'Playfair Display', serif;"
+							th:href="@{/user/profile/{userId}(userId=${session.user.getId})}">Profile</a> 
+						<a class="dropdown-item"
+							style="font-family: 'Playfair Display', serif;"
+							th:href="@{/user/change-password/{userId}(userId=${session.user.getId})}">Change password</a> 
+						<a class="dropdown-item"
+							style="font-family: 'Playfair Display', serif;"
+							th:href="@{/user/logout}">Logout</a>
+					</div>
+				</li>
+			</ul>
+		</div>
+	</nav>
+	<section class="banner_area">
+		<div class="container">
+			<div class="banner_text">
+				<h3>Book Details</h3>
+			</div>
+		</div>
+	</section>
+
+	<section class="product_details_area p_100">
+		<div class="container">
+			<div class="row product_d_price">
+				<div class="col-lg-6">
+					<div class="product_img">
+						<img class="img-fluid" style="width: 100%; height: 100%"
+							th:src="@{${book.getBookCoverPath}}" alt="">
+					</div>
+				</div>
+				<div class="col-lg-6">
+					<div class="product_details_text">
+						<h4 th:text="${book.getTitle}"></h4>
+						<h5 th:text="${book.getAuthor}"
+							style="font-size: 24px; font-family: 'Playfair Display', serif;"></h5>
+						<span th:text="'Number of ratings: ' + ${comments.size}"></span>
+						<p th:text="'Number of sold: ' + ${book.getSold}"></p>
+						<h5>
+							Price(VNÐ): <span
+								th:text="${#numbers.formatDecimal(book.getPrice,3,'POINT',0,'COMMA')}"></span>
+						</h5>
+						<form method="POST" th:action="@{/user/cart}"
+							th:if="${session.user}">
+							<div class="quantity_box">
+								<input type="hidden" name="bookId" th:value="${book.getId}">
+								<label for="quantity">Quantity:</label> <input type="number"
+									value="1" id="quantity" name="quantity" min="1">
+							</div>
+							<input type="submit" class="pink_more" value="Add to Cart">
+						</form>
+					</div>
+				</div>
+			</div>
+			<div class="product_tab_area">
+				<nav>
+					<div class="nav nav-tabs" id="nav-tab" role="tablist">
+						<a class="nav-item nav-link active" id="nav-home-tab"
+							data-toggle="tab" href="#nav-home" role="tab"
+							aria-controls="nav-home" aria-selected="true">Description</a> <a
+							class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab"
+							href="#nav-profile" role="tab" aria-controls="nav-profile"
+							aria-selected="false">Information</a>
+					</div>
+				</nav>
+				<div class="tab-content" id="nav-tabContent">
+					<div class="tab-pane fade show active" id="nav-home"
+						role="tabpanel" aria-labelledby="nav-home-tab">
+						<p th:text="${book.getDescription}"></p>
+					</div>
+					<div class="tab-pane fade" id="nav-profile" role="tabpanel"
+						aria-labelledby="nav-profile-tab">
+						<h7>Author : <span th:text="${book.getAuthor}"></span> </h7>
+						<br />
+						<h7>Pages : <span th:text="${book.getPages}"></span> </h7>
+						<br />
+						<h7>Public : <span th:text="${book.getRelease}"></span></h7>
+						<br />
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<div class="container">
+		<div class="cake_feature_inner" style="padding-top: 15px;">
+			<div class="main_title" style="padding-bottom: 15px;"
+				th:if="${session.user}">
+				<h2>Comment</h2>
+				<h5>Please leave your comments here.</h5>
+			</div>
+
+			<div class="main_title" style="padding-bottom: 15px;"
+				th:unless="${session.user}">
+				<h2>Comments</h2>
+			</div>
+
+			<div class="card-body">
+				<div th:each="comment: ${comments}">
+					<div class="d-flex flex-start align-items-center">
+						<div>
+							<h5 class="fw-bold mb-2" th:text="${comment.getUser.getRealName}"></h5>
+						</div>
+					</div>
+
+					<div class="rating-container">
+						<div class="rating">
+							<input type="radio" th:checked="${comment.getRating}==5"
+								th:name="'rating-'+${comment.getId}" style="color: yellow"
+								value="5" disabled> <input type="radio"
+								th:checked="${comment.getRating}==4"
+								th:name="'rating-'+${comment.getId}" style="color: yellow"
+								value="4" disabled> <input type="radio"
+								th:checked="${comment.getRating}==3"
+								th:name="'rating-'+${comment.getId}" style="color: yellow"
+								value="3" disabled> <input type="radio"
+								th:checked="${comment.getRating}==2"
+								th:name="'rating-'+${comment.getId}" style="color: yellow"
+								value="2" disabled> <input type="radio"
+								th:checked="${comment.getRating}==1"
+								th:name="'rating-'+${comment.getId}" style="color: yellow"
+								value="1" disabled>
+						</div>
+					</div>
+
+					<p th:id="'comment-'+${comment.getId}" class="mt-3 mb-4 pb-2"
+						th:text="${comment.getComment}"></p>
+					<div th:if="${session.user}">
+						<div th:if="${comment.getUser.getId==session.user.getId}"
+							style="display: flex">
+							<input type="button" class="btn pest_btn" value="Change"
+								style="margin-right: 5px;"
+								th:onclick="toggleForms([[${comment.getId}]])" />
+
+							<form th:method="DELETE" th:id="'deleteForm-'+${comment.getId}"
+								th:action="@{${book.getId}+'/comment/delete'}"
+								onsubmit="event.preventDefault()">
+								<input type="hidden" id="commentId" name="commentId"
+									th:value="${comment.getId}" /> <input type="button"
+									class="btn pest_btn" value="Remove"
+									th:onclick="removeComment([[${comment.getId}]])">
+							</form>
+						</div>
+					</div>
+					<div th:unless="${session.user}"></div>
+					<div
+						style="height: 1px; background: black; width: 100%; margin: 20px 0 20px 0;"></div>
+				</div>
+			</div>
+
+			<form id="postCmtForm" th:action="@{${book.getId}+'/comment'}"
+				method="POST" th:if="${session.user}">
+				<div class="card-footer py-3 border-0"
+					style="background-color: #f8f9fa;">
+					<div class="d-flex flex-start w-100">
+						<div class="form-outline w-100">
+							<input type="hidden" name="userId"
+								th:value="${session.user.getId}"> <label
+								class="form-label" style="margin-bottom: 0;"
+								for="textAreaExample">Your comment</label><br>
+							<div class="rating-container">
+								<div class="rating">
+									<input type="radio" name="ratingPost" style="color: yellow"
+										value="5"> <input type="radio" name="ratingPost"
+										style="color: yellow" value="3"> <input type="radio"
+										name="ratingPost" style="color: yellow" value="3"> <input
+										type="radio" name="ratingPost" style="color: yellow" value="2">
+									<input type="radio" name="ratingPost" style="color: yellow"
+										value="1">
+								</div>
+							</div>
+							<br>
+							<textarea class="form-control" id="postCommentArea" rows="4"
+								style="background: #fff; resize: none;" placeholder="Message"
+								name="comment" required></textarea>
+						</div>
+					</div>
+					<div class="float-end mt-2 pt-1">
+						<button type="sumit" class="btn btn-primary btn-sm">Post
+							comment</button>
+					</div>
+				</div>
+			</form>
+
+			<form id="changeCmtForm" th:method="PUT" style="display: none"
+				th:action="@{${book.getId}+'/comment'}">
+				<div class="card-footer py-3 border-0"
+					style="background-color: #f8f9fa;">
+					<div class="d-flex flex-start w-100">
+						<div class="form-outline w-100">
+							<input type="hidden" name="commentId" id="commentId2" /> <label
+								class="form-label" style="margin-bottom: 0;"
+								for="textAreaExample">Your comment</label><br>
+							<div class="rating-container">
+								<div class="rating">
+									<input type="radio" name="ratingPut" style="color: yellow"
+										value="5"> <input type="radio" name="ratingPut"
+										style="color: yellow" value="4"> <input type="radio"
+										name="ratingPut" style="color: yellow" value="3"> <input
+										type="radio" name="ratingPut" style="color: yellow" value="2">
+									<input type="radio" name="ratingPut" style="color: yellow"
+										value="1">
+								</div>
+							</div>
+							<p></p>
+							<textarea class="form-control" id="putCommentArea" rows="4"
+								style="background: #fff; resize: none;" placeholder="Message"
+								name="comment" required></textarea>
+						</div>
+					</div>
+					<div class="float-end mt-2 pt-1">
+						<button type="sumit" class="btn btn-primary btn-sm">Save
+							comment</button>
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+	<footer class="footer_area">
+		<div class="footer_widgets">
+			<div class="container">
+				<div class="row footer_wd_inner">
+					<div class="col-lg-3 col-md-12 col-sm-6 mx-auto">
+						<aside class="f_widget f_link_widget">
+							<div class="f_title">
+								<h3 style="font-size: 28px;">Work Times</h3>
+							</div>
+							<ul class="list_style">
+								<li><a href="#"
+									style="font-size: 16px; font-family: 'Playfair Display', serif;">Mon.
+										: Fri.: 8 am - 8 pm</a></li>
+								<li><a href="#"
+									style="font-size: 16px; font-family: 'Playfair Display', serif;">Mon.
+										: Fri.: 8 am - 8 pm</a></li>
+								<li><a href="#"
+									style="font-size: 16px; font-family: 'Playfair Display', serif;">Sun.
+										: Closed</a></li>
+							</ul>
+						</aside>
+					</div>
+					<div class="col-lg-3 col-md-12 col-sm-6 mx-auto">
+						<aside class="f_widget f_contact_widget">
+							<div class="f_title">
+								<h3 style="font-size: 28px;">Contact Info</h3>
+							</div>
+							<h4
+								style="font-size: 16px; font-family: 'Playfair Display', serif;">Tel:
+								0963448172</h4>
+							<h5
+								style="font-size: 16px; font-family: 'Playfair Display', serif; margin-bottom: 15px;">Email:
+								ddki1912@gmail.com</h5>
+							<p
+								style="font-size: 16px; font-family: 'Playfair Display', serif;">Address:
+								Quan Hoa, Cau Giay, Ha Noi</p>
+						</aside>
+					</div>
+				</div>
+			</div>
+		</div>
+	</footer>
+	<script type="text/javascript" th:inline="javascript">
+		function toggleForms(id) {
+			var radioSet1 = document.querySelectorAll("input[name='rating-" + id + "']");
+			var radioSet2 = document.querySelectorAll("input[name='ratingPut']");
+
+			for (var i = 0; i < radioSet1.length; i++) {
+				if (radioSet1[i].checked) {
+					radioSet2[i].checked = true;
+				}
+			}
+			var postForm = document.getElementById("postCmtForm");
+			var putForm = document.getElementById("changeCmtForm");
+			
+			var comment = document.getElementById("comment-" + id).innerText;
+			var updateComment = document.querySelector("#putCommentArea");
+			
+			updateComment.value = comment;
+
+			var input1 = document.querySelector("#deleteForm-"+id).querySelector("#commentId");
+			var input2 = document.getElementById("commentId2");
+
+			input2.value = input1.value;
+
+			postForm.style.display = "none";
+			putForm.style.display = "block";
+		}
+		
+		function removeComment(id){
+            var value = confirm('Are you sure to remove this comment?');
+            var removeForm = document.querySelector("#deleteForm-" + id);
+
+            if(value){
+                removeForm.submit();
+            }
+        }
+	</script>
+</body>
+
+</html>

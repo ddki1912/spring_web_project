@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html xmlns=http://www.w3.org/1999/xhtml
+	xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>Book Store</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script src="https://kit.fontawesome.com/279cd13ff5.js"
+	crossorigin="anonymous"></script>
+
+<link rel="stylesheet"
+	href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css"
+	integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N"
+	crossorigin="anonymous">
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+	integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+	crossorigin="anonymous"></script>
+<script
+	src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"
+	integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+	crossorigin="anonymous"></script>
+<script
+	src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
+	integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+	crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.7.0.min.js"
+	integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g="
+	crossorigin="anonymous"></script>
+
+<link rel="stylesheet" href="/css/style.css">
+<link rel="stylesheet" href="/css/responsive.css">
+</head>
+<body>
+	<nav class="navbar navbar-expand-lg sticky-top navbar-light bg-info">
+		<a class="navbar-brand text-white"
+			th:href="${session.user}?'/user/books':'/user/home'"><h2>BookStore</h2></a>
+		<button class="navbar-toggler" type="button" data-toggle="collapse"
+			data-target="#navbarSupportedContent"
+			aria-controls="navbarSupportedContent" aria-expanded="false"
+			aria-label="Toggle navigation">
+			<span class="navbar-toggler-icon"></span>
+		</button>
+
+		<div class="collapse navbar-collapse" id="navbarSupportedContent">
+			<ul class="navbar-nav mr-auto">
+				<li class="nav-item"><a class="nav-link text-white"
+					th:href="@{/user/books}">Our Books</a></li>
+				<li class="nav-item dropdown"><a
+					class="nav-link dropdown-toggle text-white" href="#"
+					id="navbarDropdown" role="button" data-toggle="dropdown"
+					aria-haspopup="true" aria-expanded="false"> Category </a>
+					<div class="dropdown-menu" aria-labelledby="navbarDropdown">
+						<div th:each="category : ${categories}">
+							<a class="dropdown-item" style="font-family: 'Playfair Display', serif;"
+								th:href="@{/user/category/{categoryName}(categoryName=${category.getName})}"
+								th:text="${category.getName}"></a>
+						</div>
+					</div></li>
+			</ul>
+			<ul class="navbar-nav ml-auto">
+				<li class="nav-item" th:if="${session.user}"><a
+					class="nav-link text-white" th:href="@{/user/order}">Order</a></li>
+				<li class="nav-item" th:if="${session.user}"><a
+					class="nav-link text-white" th:href="@{/user/cart}"><i
+						class="fa-solid fa-cart-shopping"></i>Cart</a></li>
+
+				<li class="nav-item" th:unless="${session.user}"><a
+					class="nav-link text-white" href="/user/login">Login</a></li>
+
+				<li class="nav-item" th:unless="${session.user}"><a
+					class="nav-link text-white" href="/user/register">Sign up</a></li>
+
+				<li class="nav-item dropdown" th:if="${session.user}"><a
+					class="nav-link dropdown-toggle text-white" href="#"	
+					id="navbarDropdown" role="button" data-toggle="dropdown"
+					aria-haspopup="true" aria-expanded="false"
+					th:text="${session.user.getRealName}" style="font-weight: bold; font-family: 'Playfair Display', serif;"></a>
+					<div class="dropdown-menu" aria-labelledby="navbarDropdown">
+						<a class="dropdown-item"
+							style="font-family: 'Playfair Display', serif;"
+							th:href="@{/user/profile/{userId}(userId=${session.user.getId})}">Profile</a> 
+						<a class="dropdown-item"
+							style="font-family: 'Playfair Display', serif;"
+							th:href="@{/user/change-password/{userId}(userId=${session.user.getId})}">Change password</a> 
+						<a class="dropdown-item"
+							style="font-family: 'Playfair Display', serif;"
+							th:href="@{/user/logout}">Logout</a>
+					</div>
+				</li>
+			</ul>
+		</div>
+	</nav>
+	<section class="banner_area">
+		<div class="container">
+			<div class="banner_text">
+				<h3>My Order</h3>
+			</div>
+		</div>
+	</section>
+	<section class="cart_table_area p_100">
+		<div class="container">
+			<div class="table-responsive">
+				<table class="table">
+					<thead>
+						<tr>
+							<th scope="col" class="text-center" style="width: 10%">ID</th>
+							<th scope="col" class="text-center" style="width: 15%">Order
+								Date</th>
+							<th scope="col" class="text-center">Total Money</th>
+							<th scope="col" class="text-center">Status</th>
+							<th scope="col" class="text-center" style="width: 30%">Action</th>
+						</tr>
+					</thead>
+					<tbody>
+
+						<tr th:each="order: ${orders}">
+							<td th:text="${order.getId}" class="text-center"></td>
+							<td th:text="${order.getDate}" class="text-center"></td>
+							<td
+								th:text="${#numbers.formatDecimal(order.getTotalPrice,3,'POINT',0,'COMMA')}"
+								class="text-center"></td>
+							<td th:if="${order.getStatus}==0" class="text-center">Waiting</td>
+							<td th:if="${order.getStatus}==1" class="text-center">Delivering</td>
+							<td th:if="${order.getStatus}==2" class="text-center">Delivered</td>
+							<td
+								style="display: flex; flex: 1; justify-content: space-between;">
+								<a class="pest_btn m-auto"
+								th:href="@{order/detail/{orderId}(orderId=${order.getId})}">Detail
+									Order</a>
+								<form th:if="${order.getStatus}==0" th:method="DELETE"
+									id="deleteOrderForm" th:action="@{order/delete}">
+									<input type="hidden" name="orderId" th:value="${order.getId}">
+									<button type="button" class="btn pest_btn" data-toggle="modal"
+										data-target="#deleteOrder">Cancel Order</button>
+								</form>
+							</td>
+
+						</tr>
+						<tr>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td><a class="pest_btn ml-auto" th:href="@{/user/books}">Order
+									More</a></td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</section>
+
+
+	<div class="modal fade" id="deleteOrder" tabindex="-1" role="dialog"
+		aria-labelledby="deleteOrderModal" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="exampleModalLabel" style="font-size: 20px; display: inline-block; font-family: 'Playfair Display', serif;">Cancel Order</h5>
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<p style="font-size: 20px; font-family: 'Playfair Display', serif;">Are you sure to cancel this order?</p>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-danger" id="deleteBtn" style="font-size: 16px; font-family: 'Playfair Display', serif;">Confirm</button>
+					<button type="button" class="btn btn-secondary" style="font-size: 16px; font-family: 'Playfair Display', serif;"
+						data-dismiss="modal">Cancel</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<footer class="footer_area">
+		<div class="footer_widgets">
+			<div class="container">
+				<div class="row footer_wd_inner">
+					<div class="col-lg-3 col-md-12 col-sm-6 mx-auto">
+						<aside class="f_widget f_link_widget">
+							<div class="f_title">
+								<h3 style="font-size: 28px;">Work Times</h3>
+							</div>
+							<ul class="list_style">
+								<li><a href="#"
+									style="font-size: 16px; font-family: 'Playfair Display', serif;">Mon.
+										: Fri.: 8 am - 8 pm</a></li>
+								<li><a href="#"
+									style="font-size: 16px; font-family: 'Playfair Display', serif;">Mon.
+										: Fri.: 8 am - 8 pm</a></li>
+								<li><a href="#"
+									style="font-size: 16px; font-family: 'Playfair Display', serif;">Sun.
+										: Closed</a></li>
+							</ul>
+						</aside>
+					</div>
+					<div class="col-lg-3 col-md-12 col-sm-6 mx-auto">
+						<aside class="f_widget f_contact_widget">
+							<div class="f_title">
+								<h3 style="font-size: 28px;">Contact Info</h3>
+							</div>
+							<h4
+								style="font-size: 16px; font-family: 'Playfair Display', serif;">Tel:
+								0963448172</h4>
+							<h5
+								style="font-size: 16px; font-family: 'Playfair Display', serif; margin-bottom: 15px;">Email:
+								ddki1912@gmail.com</h5>
+							<p
+								style="font-size: 16px; font-family: 'Playfair Display', serif;">Address:
+								Quan Hoa, Cau Giay, Ha Noi</p>
+						</aside>
+					</div>
+				</div>
+			</div>
+		</div>
+	</footer>
+	<script type="text/javascript">
+		$(document).ready(function() {
+			$('#deleteBtn').click(function() {
+				$('#deleteOrderForm').submit();
+			});
+		});
+	</script>
+</body>
+</html>
